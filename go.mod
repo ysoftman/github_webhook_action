@@ -1,4 +1,4 @@
-module github_webhook_action
+module github.com/ysoftman/github_webhook_action
 
 go 1.22
 
