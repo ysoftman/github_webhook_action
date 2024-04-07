@@ -2,7 +2,7 @@ package github_webhook_action
 
 import "github.com/BurntSushi/toml"
 
-var conf ConfigTOML
+var Conf ConfigTOML
 
 type ConfigTOML struct {
 	Name      string `toml:"Name"`

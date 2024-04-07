@@ -13,13 +13,13 @@ type GithubWebhook struct {
 
 func NewGithubWebhook(sender SenderInterface) *GithubWebhook {
 	LoadConfig()
-	CreateLogger(conf.Server.LogLevel, conf.Server.LogIsJSONFormat)
+	CreateLogger(Conf.Server.LogLevel, Conf.Server.LogIsJSONFormat)
 	Zerologger.Info().Msg("github_webhook_action")
 	return &GithubWebhook{sender: sender}
 }
 
 func (gwh *GithubWebhook) githubWebhook(req *http.Request) {
-	payload, err1 := github.ValidatePayload(req, []byte(conf.Server.WebhookSecretKey))
+	payload, err1 := github.ValidatePayload(req, []byte(Conf.Server.WebhookSecretKey))
 	if err1 != nil {
 		Zerologger.Error().Err(err1).Msg("failed ValidatePayload")
 		return

@@ -42,7 +42,7 @@ https://github.com/ysoftman/github_webhook_action
 func (gae *GAERouter) handlerVersion(w http.ResponseWriter, r *http.Request) {
 	ctx := appengine.NewContext(r)
 	appenginelog.Infof(ctx, "/version 요청 처리")
-	fmt.Fprintln(w, conf.BuildTime)
+	fmt.Fprintln(w, Conf.BuildTime)
 }
 
 func (gae *GAERouter) handlerWebhook(w http.ResponseWriter, r *http.Request) {

@@ -23,7 +23,7 @@ func (gr *GinRouter) Start() {
 		v1.GET("/version", gr.ginHandlerVersion)
 		v1.POST("/webhook", gr.ginHandlerGithubWebhook)
 	}
-	r.Run(fmt.Sprintf(":%v", conf.Server.Port))
+	r.Run(fmt.Sprintf(":%v", Conf.Server.Port))
 }
 
 func (gr *GinRouter) ginHandlerTestSendMessage(gc *gin.Context) {
@@ -34,7 +34,7 @@ func (gr *GinRouter) ginHandlerTestSendMessage(gc *gin.Context) {
 
 func (gr *GinRouter) ginHandlerVersion(gc *gin.Context) {
 	Zerologger.Info().Str("handler", "ginHandlerVersion").Msg("requst")
-	gc.JSON(http.StatusOK, conf.BuildTime)
+	gc.JSON(http.StatusOK, Conf.BuildTime)
 }
 
 func (gr *GinRouter) ginHandlerGithubWebhook(gc *gin.Context) {
