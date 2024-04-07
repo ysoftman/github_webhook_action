@@ -8,10 +8,10 @@ github webhook 을 받아 필요한 액션(api 호출)을 수행합니다.
 go get ./...
 
 # run for local test
-go run -ldflags "-X main.buildtime=$(date '+%Y-%m-%d_%H:%M:%S_%Z')" . -servertype normal
+go run . -servertype normal
 
 # build
-go build -ldflags "-X main.buildtime=$(date '+%Y-%m-%d_%H:%M:%S_%Z')" .
+go build .
 
 # default:gae(google app engin) 환경
 ./main

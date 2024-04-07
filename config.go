@@ -2,12 +2,12 @@ package github_webhook_action
 
 import "github.com/BurntSushi/toml"
 
-var buildtime string
 var conf ConfigTOML
 
 type ConfigTOML struct {
-	Name   string `toml:"Name"`
-	Server struct {
+	Name      string `toml:"Name"`
+	BuildTime string `toml:"BuildTime"`
+	Server    struct {
 		Port             int    `toml:"Port"`
 		LogLevel         string `toml:"LogLevel"`
 		LogIsJSONFormat  bool   `toml:"LogIsJsonFormat"`

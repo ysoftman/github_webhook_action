@@ -1,5 +1,8 @@
 Name="github_webhook_action"
 
+# date '+%Y-%m-%d_%H:%M:%S_%Z'
+BuildTime="2024-04-07_21:06:32_KST"
+
 [server]
 Port=80
 LogLevel="info"

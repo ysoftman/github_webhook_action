@@ -34,7 +34,7 @@ func (gr *GinRouter) ginHandlerTestSendMessage(gc *gin.Context) {
 
 func (gr *GinRouter) ginHandlerVersion(gc *gin.Context) {
 	Zerologger.Info().Str("handler", "ginHandlerVersion").Msg("requst")
-	gc.JSON(http.StatusOK, buildtime)
+	gc.JSON(http.StatusOK, conf.BuildTime)
 }
 
 func (gr *GinRouter) ginHandlerGithubWebhook(gc *gin.Context) {
