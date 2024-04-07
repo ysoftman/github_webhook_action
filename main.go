@@ -30,7 +30,7 @@ type configTOML struct {
 
 var buildtime string
 var conf configTOML
-var logger zerolog.Logger
+var zerologger zerolog.Logger
 
 func main() {
 	serverType := flag.String("servertype", "gae", "noraml|gae(google app engin)")
@@ -39,15 +39,26 @@ func main() {
 
 	toml.DecodeFile("config.toml", &conf)
 	CreateLogger(conf.Server.LogLevel, conf.Server.LogIsJsonFormat)
-	logger.Info().Msg("github_webhook_action")
+	zerologger.Info().Msg("github_webhook_action")
+
+	//sender := NewSender() // use default sender
+	sender := &mySender{} // use custom sender
+	gwh := NewGithubWebhook(sender)
 	if *serverType == "normal" {
-		gr := NewGinRouter()
+		gr := NewGinRouter(gwh)
 		// 일반 서버 환경으로 운영시
 		gr.Start()
 	} else if *serverType == "gae" {
 		// GAE(google app engine) 환경으로 운영시
-		gae := NewGAERouter()
+		gae := NewGAERouter(gwh)
 		gae.Start()
 	}
 	fmt.Println("wrong servertype")
+}
+
+type mySender struct {
+}
+
+func (s *mySender) SendMessage(msg string) {
+	zerologger.Info().Msgf("[my SendMessage] msg:%v", msg)
 }

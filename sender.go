@@ -6,10 +6,21 @@ import (
 	"github.com/go-resty/resty/v2"
 )
 
-func sendMessage(msg string) {
-	logger.Info().Msgf("msg:%v", msg)
+type SenderInterface interface {
+	SendMessage(msg string)
+}
+
+type Sender struct {
+}
+
+func NewSender() *Sender {
+	return &Sender{}
+}
+
+func (s *Sender) SendMessage(msg string) {
+	zerologger.Info().Msgf("msg:%v", msg)
 	if !conf.Action.API.Enable {
-		logger.Info().Msg("action api is disabled")
+		zerologger.Info().Msg("action api is disabled")
 		return
 	}
 	client := resty.New()
@@ -35,7 +46,7 @@ func sendMessage(msg string) {
 			"param2": "lemon"}).Get(conf.Action.API.URL)
 	}
 	if err != nil {
-		logger.Error().Err(err).Msg("failed to sendMessage")
+		zerologger.Error().Err(err).Msg("failed to sendMessage")
 	}
-	logger.Info().Msgf("resp:%v", resp)
+	zerologger.Info().Msgf("resp:%v", resp)
 }

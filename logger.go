@@ -15,5 +15,5 @@ func CreateLogger(logLevelString string, isJson bool) {
 	} else {
 		writer = zerolog.ConsoleWriter{Out: os.Stdout}
 	}
-	logger = zerolog.New(writer).With().Timestamp().Logger().Level(logLevel)
+	zerologger = zerolog.New(writer).With().Timestamp().Logger().Level(logLevel)
 }

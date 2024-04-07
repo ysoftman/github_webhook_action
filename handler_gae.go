@@ -9,10 +9,11 @@ import (
 )
 
 type GAERouter struct {
+	gwh *GithubWebhook
 }
 
-func NewGAERouter() *GAERouter {
-	return &GAERouter{}
+func NewGAERouter(gwh *GithubWebhook) *GAERouter {
+	return &GAERouter{gwh: gwh}
 }
 
 func (gae *GAERouter) Start() {
@@ -47,5 +48,5 @@ func (gae *GAERouter) handlerVersion(w http.ResponseWriter, r *http.Request) {
 func (gae *GAERouter) handlerWebhook(w http.ResponseWriter, r *http.Request) {
 	ctx := appengine.NewContext(r)
 	appenginelog.Infof(ctx, "/webhook 요청 처리")
-	githubWebhook(r)
+	gae.gwh.githubWebhook(r)
 }

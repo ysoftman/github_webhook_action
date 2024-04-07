@@ -7,76 +7,84 @@ import (
 	"github.com/google/go-github/github"
 )
 
-func githubWebhook(req *http.Request) {
+type GithubWebhook struct {
+	sender SenderInterface
+}
+
+func NewGithubWebhook(sender SenderInterface) *GithubWebhook {
+	return &GithubWebhook{sender: sender}
+}
+
+func (gwh *GithubWebhook) githubWebhook(req *http.Request) {
 	payload, err1 := github.ValidatePayload(req, []byte(conf.Server.WebhookSecretKey))
 	if err1 != nil {
-		logger.Error().Err(err1).Msg("failed ValidatePayload")
+		zerologger.Error().Err(err1).Msg("failed ValidatePayload")
 		return
 	}
 	event, err2 := github.ParseWebHook(github.WebHookType(req), payload)
 	if err2 != nil {
-		logger.Error().Err(err2).Msg("failed ParseWebHook")
+		zerologger.Error().Err(err2).Msg("failed ParseWebHook")
 		return
 	}
 	webhookType := github.WebHookType(req)
-	logger.Info().Msgf("github WebHookType:%v", webhookType)
+	zerologger.Info().Msgf("github WebHookType:%v", webhookType)
 	switch event := event.(type) {
 	case *github.CommitCommentEvent:
-		githubCommitCommentEvent(event)
+		gwh.githubCommitCommentEvent(event)
 	case *github.PushEvent:
-		githubPushEvent(event)
+		gwh.githubPushEvent(event)
 	case *github.PullRequestEvent:
-		githubPullRequestEvent(event)
+		gwh.githubPullRequestEvent(event)
 	case *github.PullRequestReviewEvent:
-		githubPullRequestReviewEvent(event)
+		gwh.githubPullRequestReviewEvent(event)
 	case *github.PullRequestReviewCommentEvent:
-		githubPullRequestReviewCommentEvent(event)
+		gwh.githubPullRequestReviewCommentEvent(event)
 	default:
-		logger.Info().Msgf("github WebHookType:%v", webhookType)
+		zerologger.Info().Msgf("github WebHookType:%v", webhookType)
 	}
 }
-func githubCommitCommentEvent(event *github.CommitCommentEvent) {
+func (gwh *GithubWebhook) githubCommitCommentEvent(event *github.CommitCommentEvent) {
 	msg := fmt.Sprintf("[CommitComment-%v] sender:%v(%v) comment:%v link:%v",
 		event.GetAction(),
 		event.Sender.GetLogin(),
 		event.Sender.GetName(),
 		event.GetComment(),
 		event.Comment.HTMLURL)
-	sendMessage(msg)
+	gwh.sender.SendMessage(msg)
 }
-func githubPushEvent(event *github.PushEvent) {
+func (gwh *GithubWebhook) githubPushEvent(event *github.PushEvent) {
 	msg := fmt.Sprintf("[Push-%v] sender:%v(%v) pusher:%v link:%v",
 		*event.HeadCommit.Message,
 		event.Sender.GetLogin(),
 		event.Sender.GetName(),
 		event.Pusher.GetName(),
 		event.Repo.GetHTMLURL())
-	sendMessage(msg)
+	gwh.sender.SendMessage(msg)
 }
-func githubPullRequestEvent(event *github.PullRequestEvent) {
+func (gwh *GithubWebhook) githubPullRequestEvent(event *github.PullRequestEvent) {
 	msg := fmt.Sprintf("[PullRequest-%v] sender:%v(%v) number:%v link:%v",
 		event.GetAction(),
 		event.Sender.GetLogin(),
 		event.Sender.GetName(),
 		event.GetNumber(),
 		*event.PullRequest.HTMLURL)
-	sendMessage(msg)
+	gwh.sender.SendMessage(msg)
 }
-func githubPullRequestReviewEvent(event *github.PullRequestReviewEvent) {
+func (gwh *GithubWebhook) githubPullRequestReviewEvent(event *github.PullRequestReviewEvent) {
 	msg := fmt.Sprintf("[PullRequestReview-%v] sender:%v(%v) review:%v link:%v",
 		event.GetAction(),
 		event.Sender.GetLogin(),
 		event.Sender.GetName(),
 		event.GetReview().String(),
 		event.GetReview().GetHTMLURL())
-	sendMessage(msg)
+	gwh.sender.SendMessage(msg)
 }
-func githubPullRequestReviewCommentEvent(event *github.PullRequestReviewCommentEvent) {
+func (gwh *GithubWebhook) githubPullRequestReviewCommentEvent(event *github.PullRequestReviewCommentEvent) {
 	msg := fmt.Sprintf("[PullRequestReviewComment-%v] sender:%v(%v) comment:%v link:%v",
 		event.GetAction(),
 		event.Sender.GetLogin(),
 		event.Sender.GetName(),
 		event.Comment.String(),
 		event.GetComment().GetURL())
-	sendMessage(msg)
+	gwh.sender.SendMessage(msg)
 }
