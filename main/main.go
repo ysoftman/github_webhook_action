@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"log"
 
-	gwa "github.com/ysoftman/github_webhook_action/pkgs"
+	gwa "github.com/ysoftman/github_webhook_action/pkgs/github_webhook_action"
 )
 
 func main() {
