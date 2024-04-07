@@ -63,7 +63,7 @@ func (s *mySender) SendMessage(msg string) {
 	} else if strings.ToLower(gwa.Conf.Action.API.Mothod) == "get" {
 		resp, err = req.SetQueryParams(map[string]string{
 			"param1": "apple",
-			"param2": "lemon"}).Get(conf.Action.API.URL)
+			"param2": "lemon"}).Get(gwa.Conf.Action.API.URL)
 	}
 	if err != nil {
 		gwa.Zerologger.Error().Err(err).Msg("[my SendMessage] failed to sendMessage")

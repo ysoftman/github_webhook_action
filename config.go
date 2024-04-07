@@ -29,5 +29,5 @@ type ConfigTOML struct {
 }
 
 func LoadConfig() {
-	toml.DecodeFile("config.toml", &conf)
+	toml.DecodeFile("config.toml", &Conf)
 }

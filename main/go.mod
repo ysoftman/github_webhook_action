@@ -2,7 +2,10 @@ module main
 
 go 1.22.1
 
-require github.com/ysoftman/github_webhook_action v0.1.4
+require (
+	github.com/go-resty/resty/v2 v2.12.0
+	github.com/ysoftman/github_webhook_action v0.1.4
+)
 
 require (
 	github.com/BurntSushi/toml v1.3.2 // indirect
@@ -14,7 +17,6 @@ require (
 	github.com/go-playground/locales v0.14.1 // indirect
 	github.com/go-playground/universal-translator v0.18.1 // indirect
 	github.com/go-playground/validator/v10 v10.14.0 // indirect
-	github.com/go-resty/resty/v2 v2.12.0 // indirect
 	github.com/goccy/go-json v0.10.2 // indirect
 	github.com/golang/protobuf v1.5.2 // indirect
 	github.com/google/go-github v17.0.0+incompatible // indirect
