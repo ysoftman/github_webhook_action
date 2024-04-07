@@ -13,7 +13,7 @@ func main() {
 	flag.Parse()
 	log.Println("servertype :", *serverType)
 
-	//sender := NewSender() // use default sender
+	sender := NewSender() // use default sender
 	sender := &mySender{} // use custom sender
 	gwh := gwa.NewGithubWebhook(sender)
 	if *serverType == "normal" {
