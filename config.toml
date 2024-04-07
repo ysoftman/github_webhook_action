@@ -11,6 +11,17 @@ Enable=false
 Mothod="post"
 Auth=""
 URL="https://httpbin.org/post"
+
+[[action.target]]
+RepoName="https://github.com/ysoftman/github_webhook_action"
+TargetID=1
+RequestBody="""
+{}
+"""
+
+[[action.target]]
+RepoName="https://github.com/ysoftman/test_code"
+TargetID=2
 RequestBody="""
 {}
 """

@@ -7,6 +7,8 @@ import (
 	"github.com/rs/zerolog"
 )
 
+var zerologger zerolog.Logger
+
 func CreateLogger(logLevelString string, isJson bool) {
 	logLevel, _ := zerolog.ParseLevel(logLevelString)
 	var writer io.Writer

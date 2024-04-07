@@ -12,6 +12,9 @@ type GithubWebhook struct {
 }
 
 func NewGithubWebhook(sender SenderInterface) *GithubWebhook {
+	LoadConfig()
+	CreateLogger(conf.Server.LogLevel, conf.Server.LogIsJSONFormat)
+	zerologger.Info().Msg("github_webhook_action")
 	return &GithubWebhook{sender: sender}
 }
 
