@@ -90,7 +90,7 @@ gcloud app logs tail -s default
 ## webhook 등록
 
 - https://github.com/ysoftman/test_code/settings/hooks 에 등록
-  - pyloadURL: https://github-webhook-action.appspot.com/v1/webhook
+  - payloadURL: https://github-webhook-action.appspot.com/v1/webhook
   - secret: ysoftman
   - trgger(indiviual event): commit comment, pushes, pull requests, pull request reviews, pull request review comments ...등 트리거
 
