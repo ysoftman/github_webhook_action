@@ -14,10 +14,10 @@ go run -ldflags "-X main.buildtime=$(date '+%Y-%m-%d_%H:%M:%S_%Z')" . -servertyp
 go build -ldflags "-X main.buildtime=$(date '+%Y-%m-%d_%H:%M:%S_%Z')" .
 
 # default:gae(google app engin) 환경
-./github_webhook_action
+./main
 
 # 일반 서버 환경
-./github_webhook_action -servertype normal
+./main -servertype normal
 ```
 
 ## google app engine 사용
