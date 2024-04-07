@@ -8,7 +8,21 @@ import (
 	appenginelog "google.golang.org/appengine/v2/log"
 )
 
-func handlerIndex(w http.ResponseWriter, r *http.Request) {
+type GAERouter struct {
+}
+
+func NewGAERouter() *GAERouter {
+	return &GAERouter{}
+}
+
+func (gae *GAERouter) Start() {
+	http.HandleFunc("/", gae.handlerIndex)
+	http.HandleFunc("/v1/version", gae.handlerVersion)
+	http.HandleFunc("/v1/webhook", gae.handlerWebhook)
+	appengine.Main()
+}
+
+func (gae *GAERouter) handlerIndex(w http.ResponseWriter, r *http.Request) {
 	ctx := appengine.NewContext(r)
 	appenginelog.Infof(ctx, "/ 요청 처리")
 	out := `
@@ -23,12 +37,14 @@ https://github.com/ysoftman/github_webhook_action
 `
 	fmt.Fprintln(w, out)
 }
-func handlerVersion(w http.ResponseWriter, r *http.Request) {
+
+func (gae *GAERouter) handlerVersion(w http.ResponseWriter, r *http.Request) {
 	ctx := appengine.NewContext(r)
 	appenginelog.Infof(ctx, "/version 요청 처리")
 	fmt.Fprintln(w, buildtime)
 }
-func handlerWebhook(w http.ResponseWriter, r *http.Request) {
+
+func (gae *GAERouter) handlerWebhook(w http.ResponseWriter, r *http.Request) {
 	ctx := appengine.NewContext(r)
 	appenginelog.Infof(ctx, "/webhook 요청 처리")
 	githubWebhook(r)
