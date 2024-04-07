@@ -49,6 +49,9 @@ func (s *mySender) SendMessage(msg string) {
 			break
 		}
 	}
+	if reqBody.To == 0 {
+		gwa.Zerologger.Error().Msg("[my SendMessage] can't find repo name in msg")
+	}
 
 	client := resty.New()
 	req := client.R().SetHeader("Accept", "application/json").SetBody(&reqBody)

@@ -35,6 +35,9 @@ func (s *Sender) SendMessage(msg string) {
 			break
 		}
 	}
+	if reqBody.To == 0 {
+		Zerologger.Error().Msg("can't find repo name in msg")
+	}
 
 	client := resty.New()
 	req := client.R().SetHeader("Accept", "application/json").SetBody(&reqBody)
