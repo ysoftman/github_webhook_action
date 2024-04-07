@@ -23,14 +23,20 @@ func (s *Sender) SendMessage(msg string) {
 		zerologger.Info().Msg("action api is disabled")
 		return
 	}
-	client := resty.New()
+
 	reqBody := struct {
-		Field1  string `json:"field1"`
+		To      int    `json:"to"`
 		Message string `json:"msg"`
-	}{
-		"aaa",
-		msg,
+	}{Message: msg}
+	for _, v := range conf.Action.Target {
+		if strings.Contains(msg, v.RepoName) {
+			reqBody.To = v.TargetID
+			zerologger.Info().Int("target ID", v.TargetID).Msg("")
+			break
+		}
 	}
+
+	client := resty.New()
 	req := client.R().SetHeader("Accept", "application/json").SetBody(&reqBody)
 	if len(conf.Action.API.Auth) > 0 {
 		req = req.SetAuthToken(conf.Action.API.Auth)
