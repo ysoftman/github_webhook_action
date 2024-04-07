@@ -27,17 +27,17 @@ func (gr *GinRouter) Start() {
 }
 
 func (gr *GinRouter) ginHandlerTestSendMessage(gc *gin.Context) {
-	zerologger.Info().Str("handler", "ginHandlerTestSendMessage").Msg("requst")
+	Zerologger.Info().Str("handler", "ginHandlerTestSendMessage").Msg("requst")
 	gc.JSON(http.StatusOK, "test send message(check server log)")
 	gr.gwh.sender.SendMessage("this is test message to check sendmessage")
 }
 
 func (gr *GinRouter) ginHandlerVersion(gc *gin.Context) {
-	zerologger.Info().Str("handler", "ginHandlerVersion").Msg("requst")
+	Zerologger.Info().Str("handler", "ginHandlerVersion").Msg("requst")
 	gc.JSON(http.StatusOK, buildtime)
 }
 
 func (gr *GinRouter) ginHandlerGithubWebhook(gc *gin.Context) {
-	zerologger.Info().Str("handler", "ginHandlerGithubWebhook").Msg("requst")
+	Zerologger.Info().Str("handler", "ginHandlerGithubWebhook").Msg("requst")
 	gr.gwh.githubWebhook(gc.Request)
 }

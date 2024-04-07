@@ -14,23 +14,23 @@ type GithubWebhook struct {
 func NewGithubWebhook(sender SenderInterface) *GithubWebhook {
 	LoadConfig()
 	CreateLogger(conf.Server.LogLevel, conf.Server.LogIsJSONFormat)
-	zerologger.Info().Msg("github_webhook_action")
+	Zerologger.Info().Msg("github_webhook_action")
 	return &GithubWebhook{sender: sender}
 }
 
 func (gwh *GithubWebhook) githubWebhook(req *http.Request) {
 	payload, err1 := github.ValidatePayload(req, []byte(conf.Server.WebhookSecretKey))
 	if err1 != nil {
-		zerologger.Error().Err(err1).Msg("failed ValidatePayload")
+		Zerologger.Error().Err(err1).Msg("failed ValidatePayload")
 		return
 	}
 	event, err2 := github.ParseWebHook(github.WebHookType(req), payload)
 	if err2 != nil {
-		zerologger.Error().Err(err2).Msg("failed ParseWebHook")
+		Zerologger.Error().Err(err2).Msg("failed ParseWebHook")
 		return
 	}
 	webhookType := github.WebHookType(req)
-	zerologger.Info().Msgf("github WebHookType:%v", webhookType)
+	Zerologger.Info().Msgf("github WebHookType:%v", webhookType)
 	switch event := event.(type) {
 	case *github.CommitCommentEvent:
 		gwh.githubCommitCommentEvent(event)
@@ -43,7 +43,7 @@ func (gwh *GithubWebhook) githubWebhook(req *http.Request) {
 	case *github.PullRequestReviewCommentEvent:
 		gwh.githubPullRequestReviewCommentEvent(event)
 	default:
-		zerologger.Info().Msgf("github WebHookType:%v", webhookType)
+		Zerologger.Info().Msgf("github WebHookType:%v", webhookType)
 	}
 }
 func (gwh *GithubWebhook) githubCommitCommentEvent(event *github.CommitCommentEvent) {

@@ -18,9 +18,9 @@ func NewSender() *Sender {
 }
 
 func (s *Sender) SendMessage(msg string) {
-	zerologger.Info().Msgf("msg:%v", msg)
+	Zerologger.Info().Msgf("msg:%v", msg)
 	if !conf.Action.API.Enable {
-		zerologger.Info().Msg("action api is disabled")
+		Zerologger.Info().Msg("action api is disabled")
 		return
 	}
 
@@ -31,7 +31,7 @@ func (s *Sender) SendMessage(msg string) {
 	for _, v := range conf.Action.Target {
 		if strings.Contains(msg, v.RepoName) {
 			reqBody.To = v.TargetID
-			zerologger.Info().Int("target ID", v.TargetID).Msg("")
+			Zerologger.Info().Int("target ID", v.TargetID).Msg("")
 			break
 		}
 	}
@@ -52,7 +52,7 @@ func (s *Sender) SendMessage(msg string) {
 			"param2": "lemon"}).Get(conf.Action.API.URL)
 	}
 	if err != nil {
-		zerologger.Error().Err(err).Msg("failed to sendMessage")
+		Zerologger.Error().Err(err).Msg("failed to sendMessage")
 	}
-	zerologger.Info().Msgf("resp:%v", resp)
+	Zerologger.Info().Msgf("resp:%v", resp)
 }
