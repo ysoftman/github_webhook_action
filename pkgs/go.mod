@@ -1,4 +1,4 @@
-module github.com/ysoftman/github_webhook_action
+module github.com/ysoftman/github_webhook_action/pkgs
 
 go 1.22.1
 
