@@ -1,4 +1,4 @@
-package main
+package github_webhook_action
 
 import (
 	"io"
@@ -7,7 +7,7 @@ import (
 	"github.com/rs/zerolog"
 )
 
-var zerologger zerolog.Logger
+var Zerologger zerolog.Logger
 
 func CreateLogger(logLevelString string, isJson bool) {
 	logLevel, _ := zerolog.ParseLevel(logLevelString)
@@ -17,5 +17,5 @@ func CreateLogger(logLevelString string, isJson bool) {
 	} else {
 		writer = zerolog.ConsoleWriter{Out: os.Stdout}
 	}
-	zerologger = zerolog.New(writer).With().Timestamp().Logger().Level(logLevel)
+	Zerologger = zerolog.New(writer).With().Timestamp().Logger().Level(logLevel)
 }

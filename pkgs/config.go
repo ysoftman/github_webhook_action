@@ -1,4 +1,4 @@
-package main
+package github_webhook_action
 
 import "github.com/BurntSushi/toml"
 
