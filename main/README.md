@@ -71,7 +71,7 @@ gcloud init
 # --verion 버전 명시
 # --promote 현재 배포한 버전이 모든 트랙픽(100%)을 받도록 한다. 기존 버전의 인스턴스는 트랙픽 0% 이 된다.
 # --stop-previous-version 새버전이 올라가면 기존 버전은 stop 하도록 한다.
-# gcloud app deploy ./app.yaml --version 20240405 --promote --stop-previous-version
+gcloud app deploy ./app.yaml --version 20240405 --promote --stop-previous-version
 
 # 빌드 로그
 https://console.cloud.google.com/cloud-build
