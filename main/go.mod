@@ -4,7 +4,7 @@ go 1.22.1
 
 require (
 	github.com/go-resty/resty/v2 v2.12.0
-	github.com/ysoftman/github_webhook_action v0.1.5
+	github.com/ysoftman/github_webhook_action v0.1.6
 )
 
 require (
