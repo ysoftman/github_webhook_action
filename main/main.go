@@ -20,10 +20,10 @@ func main() {
 	gwh := gwa.NewGithubWebhook(sender)
 	if *serverType == "normal" {
 		// 일반 서버 환경으로 운영시
-		gwa.NewGinRouter(gwh).Start()
+		gwa.NewGinRouter(gwh, true).Start()
 	} else if *serverType == "gae" {
 		// GAE(google app engine) 환경으로 운영시
-		gwa.NewGAERouter(gwh).Start()
+		gwa.NewGAERouter(gwh, true).Start()
 	}
 	fmt.Println("wrong servertype")
 }

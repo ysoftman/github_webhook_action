@@ -9,11 +9,15 @@ import (
 )
 
 type GAERouter struct {
-	gwh *GithubWebhook
+	gwh       *GithubWebhook
+	allowCORS bool
 }
 
-func NewGAERouter(gwh *GithubWebhook) *GAERouter {
-	return &GAERouter{gwh: gwh}
+func NewGAERouter(gwh *GithubWebhook, allowCORS bool) *GAERouter {
+	return &GAERouter{
+		gwh:       gwh,
+		allowCORS: allowCORS,
+	}
 }
 
 func (gae *GAERouter) Start() {
@@ -21,6 +25,13 @@ func (gae *GAERouter) Start() {
 	http.HandleFunc("/v1/version", gae.handlerVersion)
 	http.HandleFunc("/v1/webhook", gae.handlerWebhook)
 	appengine.Main()
+}
+
+func (gae *GAERouter) SetCommonResponseHeader(w http.ResponseWriter) {
+	if gae.allowCORS {
+		w.Header().Set("Access-Control-Allow-Origin", "*")
+		w.Header().Set("Access-Control-Allow-Methods", "get")
+	}
 }
 
 func (gae *GAERouter) handlerIndex(w http.ResponseWriter, r *http.Request) {
@@ -37,17 +48,20 @@ https://github-webhook-action.appspot.com/v1/webhook
 # github
 https://github.com/ysoftman/github_webhook_action
 `
+	gae.SetCommonResponseHeader(w)
 	fmt.Fprintln(w, out)
 }
 
 func (gae *GAERouter) handlerVersion(w http.ResponseWriter, r *http.Request) {
 	ctx := appengine.NewContext(r)
 	appenginelog.Infof(ctx, "/version 요청 처리")
+	gae.SetCommonResponseHeader(w)
 	fmt.Fprintln(w, Conf.BuildTime)
 }
 
 func (gae *GAERouter) handlerWebhook(w http.ResponseWriter, r *http.Request) {
 	ctx := appengine.NewContext(r)
 	appenginelog.Infof(ctx, "/webhook 요청 처리")
+	gae.SetCommonResponseHeader(w)
 	gae.gwh.githubWebhook(r)
 }

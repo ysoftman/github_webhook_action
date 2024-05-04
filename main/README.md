@@ -11,7 +11,7 @@ go get ./...
 go run . -servertype normal
 
 # build
-go build .
+go build
 
 # default:gae(google app engin) 환경
 ./main
