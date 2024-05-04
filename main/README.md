@@ -59,6 +59,10 @@ gcloud auth login
 # Compute Region and Zone 선택
 gcloud init
 
+# 다른 프로젝트 설정도 있다면 확인하고 default 변경
+gcloud projects list
+gcloud config set project github-webhook-action
+
 # glcoud 구글 app engine 에 배포하기
 # 배포 종료시 접속 가능한 url 이 표시된다.
 # 배포전 아래 내용이 출력된다. 이상이 있다면 gcloud init 로 다시 설정하자.
