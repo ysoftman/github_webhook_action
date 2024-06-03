@@ -11,7 +11,7 @@ func main() {
 	//sender := gwa.NewSender() // use default sender
 	sender := &mySender{} // use custom sender
 	gwh := gwa.NewGithubWebhook(sender)
-	gwa.NewGinRouter(gwh, true).Start()
+	gwa.NewGAERouter(gwh, true).Start()
 }
 
 type mySender struct {
