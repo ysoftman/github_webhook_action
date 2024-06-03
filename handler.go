@@ -66,7 +66,8 @@ func (gae *GAERouter) handlerVersion(w http.ResponseWriter, r *http.Request) {
 }
 
 func (gae *GAERouter) handlerLog(w http.ResponseWriter, r *http.Request) {
-	Zerologger.Info().Str("handler", "handlerLog").Msg("requst")
+	//log 요청은 로그로 남기지 않는다
+	//Zerologger.Info().Str("handler", "handlerLog").Msg("requst")
 	if appengine.IsAppEngine() {
 		ctx := appengine.NewContext(r)
 		appenginelog.Infof(ctx, "/log 요청 처리")

@@ -4,11 +4,11 @@ go 1.22.1
 
 require (
 	github.com/go-resty/resty/v2 v2.12.0
-	github.com/ysoftman/github_webhook_action v0.1.9
+	github.com/ysoftman/github_webhook_action v0.1.11
 )
 
 // local 에서 아직 개발중인 모듈을 테스트 할때만 사용
-replace github.com/ysoftman/github_webhook_action v0.1.9 => ../
+//replace github.com/ysoftman/github_webhook_action v0.1.11 => ../
 
 require (
 	github.com/BurntSushi/toml v1.3.2 // indirect
