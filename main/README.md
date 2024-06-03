@@ -8,16 +8,14 @@ github webhook 을 받아 필요한 액션(api 호출)을 수행합니다.
 go get ./...
 
 # run for local test
-go run . -servertype normal
+go run .
 
 # build
 go build
 
-# default:gae(google app engin) 환경
+# 실행
 ./main
 
-# 일반 서버 환경
-./main -servertype normal
 ```
 
 ## google app engine 사용
@@ -97,4 +95,3 @@ gcloud app logs tail -s default
   - payloadURL: https://github-webhook-action.appspot.com/v1/webhook
   - secret: ysoftman
   - trgger(indiviual event): commit comment, pushes, pull requests, pull request reviews, pull request review comments ...등 트리거
-
