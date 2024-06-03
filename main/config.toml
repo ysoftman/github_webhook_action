@@ -15,6 +15,12 @@ RepoName="https://github.com/ysoftman/github_webhook_action"
 [[hook]]
 RepoName="https://github.com/ysoftman/test_code"
 
+[[hook]]
+RepoName="https://github.com/ysoftman/myenv"
+
+[[hook]]
+RepoName="https://github.com/ysoftman/ysoftman.github.io"
+
 [action]
 Enable=false
 Method="post"

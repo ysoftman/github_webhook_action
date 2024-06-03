@@ -4,18 +4,76 @@ import (
 	"io"
 	"os"
 
+	"github.com/hpcloud/tail"
 	"github.com/rs/zerolog"
+	"gopkg.in/natefinch/lumberjack.v2"
 )
+
+const ServerLogFile = "server.log"
 
 var Zerologger zerolog.Logger
 
 func CreateLogger(logLevelString string, isJson bool) {
 	logLevel, _ := zerolog.ParseLevel(logLevelString)
-	var writer io.Writer
+	var writers []io.Writer
 	if isJson {
-		writer = os.Stdout
+		writers = append(writers, os.Stdout)
 	} else {
-		writer = zerolog.ConsoleWriter{Out: os.Stdout}
+		writers = append(writers, zerolog.ConsoleWriter{Out: os.Stdout})
 	}
-	Zerologger = zerolog.New(writer).With().Timestamp().Logger().Level(logLevel)
+	lj := &lumberjack.Logger{
+		// 기본 로그 파일 명
+		Filename: ServerLogFile,
+		// 로그 파일당 최대 허용 크기(megabytes) - rotate 조건
+		// MaxSize is the maximum size in megabytes of the log file before it gets
+		// rotated. It defaults to 100 megabytes.
+		// MaxSize 보다 커야만 rotate 된다.
+		// MaxSize: 999999,
+		MaxSize: 1,
+
+		// old 로그 유지 조건 - MaxAge or MaxBackups
+		// old 로그 유지 기간(days)
+		// MaxAge is the maximum number of days to retain old log files based on the
+		// timestamp encoded in their filename.  Note that a day is defined as 24
+		// hours and may not exactly correspond to calendar days due to daylight
+		// savings, leap seconds, etc. The default is not to remove old log files
+		// based on age.
+		MaxAge: 365 * 100,
+
+		// old 로그 유지 개수
+		// MaxBackups is the maximum number of old log files to retain.  The default
+		// is to retain all old log files (though MaxAge may still cause them to get
+		// deleted.)
+		MaxBackups: 2,
+
+		// 로컬 시간으로 파일명(타임스탬프)사용, 기본 UTC
+		// LocalTime determines if the time used for formatting the timestamps in
+		// backup files is the computer's local time.  The default is to use UTC
+		// time.
+		LocalTime: true,
+
+		// 압축여부
+		// Compress determines if the rotated log files should be compressed
+		// using gzip. The default is not to perform compression.
+		Compress: false,
+	}
+	writers = append(writers, lj)
+	mw := io.MultiWriter(writers...)
+	Zerologger = zerolog.New(mw).With().Timestamp().Logger().Level(logLevel)
+}
+
+func TailLog() string {
+	t, err := tail.TailFile(ServerLogFile,
+		tail.Config{
+			Location: &tail.SeekInfo{Offset: -1000, Whence: os.SEEK_END},
+			Follow:   false,
+		})
+	if err != nil {
+		return ""
+	}
+	log := ""
+	for line := range t.Lines {
+		log += line.Text
+	}
+	return log
 }
