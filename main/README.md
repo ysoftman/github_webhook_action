@@ -25,9 +25,12 @@ go build
 brew install google-cloud-sdk
 # 또는 수동 설치
 cd ~/workspace
-wget https://dl.google.com/dl/cloudsdk/channels/rapid/downloads/google-cloud-sdk-365.0.0-darwin-x86_64.tar.gz
+# x86_64
+wget https://dl.google.com/dl/cloudsdk/channels/rapid/downloads/google-cloud-cli-477.0.0-darwin-x86_64.tar.gz
+# arm64
+wget https://dl.google.com/dl/cloudsdk/channels/rapid/downloads/google-cloud-cli-477.0.0-darwin-arm.tar.gz
 rm -rf google-cloud-sdk
-tar zxvf google-cloud-sdk-365.0.0-darwin-x86_64.tar.gz
+tar zxvf google-cloud-cli-477.0.0-darwin-arm.tar.gz
 # 컴포넌트 설치, golang 패키지 설치
 gcloud components install app-engine-go
 

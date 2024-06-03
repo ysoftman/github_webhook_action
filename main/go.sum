@@ -84,6 +84,8 @@ github.com/ugorji/go/codec v1.2.11 h1:BMaWp1Bb6fHwEtbplGBGJ498wD+LKlNSl25MjdZY4d
 github.com/ugorji/go/codec v1.2.11/go.mod h1:UNopzCgEMSXjBc6AOMqYvWC1ktqTAfzJZUZgYf6w6lg=
 github.com/ysoftman/github_webhook_action v0.1.7 h1:TDqWtfTCUro4s/Pv7Y8b8sQgrOqrW+c5MCXgPGDQw9M=
 github.com/ysoftman/github_webhook_action v0.1.7/go.mod h1:WoW8c9OK46ED5kkn7rBBPnRz7DCItE8IokUd6iQVVMI=
+github.com/ysoftman/github_webhook_action v0.1.8 h1:FMvS5EU1of79/ceAcNhuJmeFEtAu1oEosutp5+YU744=
+github.com/ysoftman/github_webhook_action v0.1.8/go.mod h1:8jtvFFnvJiTC8rDinUiWhFgkMpXkhu43BV+G+u4AquU=
 github.com/yuin/goldmark v1.4.13/go.mod h1:6yULJ656Px+3vBD8DxQVa3kxgyrAnzto9xy5taEt/CY=
 golang.org/x/arch v0.0.0-20210923205945-b76863e36670/go.mod h1:5om86z9Hs0C8fWVUuoMHwpExlXzs5Tkyp9hOrfG7pp8=
 golang.org/x/arch v0.3.0 h1:02VY4/ZcO/gBOH6PUaoiptASxtXU10jazRCP865E97k=

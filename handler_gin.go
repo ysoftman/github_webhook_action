@@ -32,6 +32,8 @@ func (gr *GinRouter) Start() {
 		v1.POST("/webhook", gr.ginHandlerGithubWebhook)
 	}
 	r.RedirectTrailingSlash = false
+	//http.Handle("/", r)
+	//appengine.Main()
 	r.Run(fmt.Sprintf(":%v", Conf.Server.Port))
 }
 
