@@ -8,7 +8,7 @@ require (
 )
 
 // local 에서 아직 개발중인 모듈을 테스트 할때만 사용
-//replace github.com/ysoftman/github_webhook_action v0.1.7 => ../
+replace github.com/ysoftman/github_webhook_action v0.1.7 => ../
 
 require (
 	github.com/BurntSushi/toml v1.3.2 // indirect

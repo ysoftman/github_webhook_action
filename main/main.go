@@ -33,40 +33,40 @@ type mySender struct {
 
 func (s *mySender) SendMessage(msg string) {
 	gwa.Zerologger.Info().Msgf("[my SendMessage] msg:%v", msg)
-	if !gwa.Conf.Action.API.Enable {
-		gwa.Zerologger.Info().Msg("action api is disabled")
+	if !gwa.Conf.Action.Enable {
+		gwa.Zerologger.Info().Msg("Action is disabled")
 		return
 	}
 
 	reqBody := struct {
-		To      int    `json:"to"`
 		Message string `json:"msg"`
 	}{Message: msg}
-	for _, v := range gwa.Conf.Action.Target {
+	isValidHook := false
+	for _, v := range gwa.Conf.Hook {
 		if strings.Contains(msg, v.RepoName) {
-			reqBody.To = v.TargetID
-			gwa.Zerologger.Info().Int("target ID", v.TargetID).Msg("")
+			isValidHook = true
+			gwa.Zerologger.Info().Str("hook from:", v.RepoName).Msg("")
 			break
 		}
 	}
-	if reqBody.To == 0 {
+	if !isValidHook {
 		gwa.Zerologger.Error().Msg("[my SendMessage] can't find repo name in msg")
 	}
 
 	client := resty.New()
 	req := client.R().SetHeader("Accept", "application/json").SetBody(&reqBody)
-	if len(gwa.Conf.Action.API.Auth) > 0 {
-		req = req.SetAuthToken(gwa.Conf.Action.API.Auth)
+	if len(gwa.Conf.Action.Auth) > 0 {
+		req = req.SetAuthToken(gwa.Conf.Action.Auth)
 	}
 
 	var resp *resty.Response
 	var err error
-	if strings.ToLower(gwa.Conf.Action.API.Mothod) == "post" {
-		resp, err = req.Post(gwa.Conf.Action.API.URL)
-	} else if strings.ToLower(gwa.Conf.Action.API.Mothod) == "get" {
+	if strings.ToLower(gwa.Conf.Action.Method) == "post" {
+		resp, err = req.Post(gwa.Conf.Action.URL)
+	} else if strings.ToLower(gwa.Conf.Action.Method) == "get" {
 		resp, err = req.SetQueryParams(map[string]string{
 			"param1": "apple",
-			"param2": "lemon"}).Get(gwa.Conf.Action.API.URL)
+			"param2": "lemon"}).Get(gwa.Conf.Action.URL)
 	}
 	if err != nil {
 		gwa.Zerologger.Error().Err(err).Msg("[my SendMessage] failed to sendMessage")

@@ -13,18 +13,14 @@ type ConfigTOML struct {
 		LogIsJSONFormat  bool   `toml:"LogIsJsonFormat"`
 		WebhookSecretKey string `toml:"WebhookSecretKey"`
 	} `toml:"server"`
+	Hook []struct {
+		RepoName string `toml:"RepoName"`
+	} `toml:"hook"`
 	Action struct {
-		API struct {
-			Enable bool   `toml:"Enable"`
-			Mothod string `toml:"Mothod"`
-			Auth   string `toml:"Auth"`
-			URL    string `toml:"URL"`
-		} `toml:"api"`
-		Target []struct {
-			RepoName    string `toml:"RepoName"`
-			TargetID    int    `toml:"TargetID"`
-			RequestBody string `toml:"RequestBody"`
-		} `toml:"target"`
+		Enable bool   `toml:"Enable"`
+		Method string `toml:"Method"`
+		Auth   string `toml:"Auth"`
+		URL    string `toml:"URL"`
 	} `toml:"action"`
 }
 
