@@ -90,6 +90,12 @@ gcloud app browse
 # 앱 로그 확인
 https://console.cloud.google.com/logs/viewer?project=github-webhook-action
 gcloud app logs tail -s default
+
+# instaces list
+gcloud app instances list
+
+# ssh 접속
+gcloud app instances ssh default --server=default --version=20240604
 ```
 
 ## webhook 등록

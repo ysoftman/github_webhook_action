@@ -63,6 +63,7 @@ func CreateLogger(logFile, logLevelString string, isJson bool) {
 func TailLog() string {
 	t, err := tail.TailFile(Conf.Server.LogFile,
 		tail.Config{
+			//offset 보다 크게 로그가 쌓여 있어야 한다
 			Location: &tail.SeekInfo{Offset: -1000, Whence: os.SEEK_END},
 			Follow:   false,
 		})
