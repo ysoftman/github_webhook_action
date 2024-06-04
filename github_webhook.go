@@ -40,6 +40,10 @@ func (gwh *GithubWebhook) githubWebhook(req *http.Request) {
 		gwh.githubPullRequestReviewEvent(event)
 	case *github.PullRequestReviewCommentEvent:
 		gwh.githubPullRequestReviewCommentEvent(event)
+	case *github.CreateEvent:
+		gwh.githubCreateEvent(event)
+	case *github.ReleaseEvent:
+		gwh.githubReleaseEvent(event)
 	default:
 		Zerologger.Info().Msgf("github WebHookType:%v", webhookType)
 	}
@@ -87,5 +91,24 @@ func (gwh *GithubWebhook) githubPullRequestReviewCommentEvent(event *github.Pull
 		event.Sender.GetName(),
 		event.Comment.String(),
 		event.GetComment().GetURL())
+	gwh.sender.SendMessage(msg)
+}
+func (gwh *GithubWebhook) githubCreateEvent(event *github.CreateEvent) {
+	msg := fmt.Sprintf("[Create-%v] sender:%v(%v) description:%v link:%v",
+		*(event.RefType),
+		event.Sender.GetLogin(),
+		event.Sender.GetName(),
+		*(event.Description),
+		event.Repo.GetHTMLURL())
+	gwh.sender.SendMessage(msg)
+}
+func (gwh *GithubWebhook) githubReleaseEvent(event *github.ReleaseEvent) {
+	msg := fmt.Sprintf("[Release-%v] sender:%v(%v) name:%v tag:%v link:%v",
+		event.GetAction(),
+		event.Sender.GetLogin(),
+		event.Sender.GetName(),
+		event.GetRelease().Name,
+		event.GetRelease().TagName,
+		event.GetRelease().URL)
 	gwh.sender.SendMessage(msg)
 }
