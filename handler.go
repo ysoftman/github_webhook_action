@@ -56,7 +56,7 @@ https://github.com/ysoftman/github_webhook_action
 }
 
 func (gae *GAERouter) handlerVersion(w http.ResponseWriter, r *http.Request) {
-	Zerologger.Info().Str("handler", "handlerVersion").Msg("requst")
+	Zerologger.Info().Str("handler", "/version").Msg("requst")
 	if appengine.IsAppEngine() {
 		ctx := appengine.NewContext(r)
 		appenginelog.Infof(ctx, "/version 요청 처리")
@@ -67,7 +67,7 @@ func (gae *GAERouter) handlerVersion(w http.ResponseWriter, r *http.Request) {
 
 func (gae *GAERouter) handlerLog(w http.ResponseWriter, r *http.Request) {
 	//log 요청은 로그로 남기지 않는다
-	//Zerologger.Info().Str("handler", "handlerLog").Msg("requst")
+	//Zerologger.Info().Str("handler", "/log").Msg("requst")
 	if appengine.IsAppEngine() {
 		ctx := appengine.NewContext(r)
 		appenginelog.Infof(ctx, "/log 요청 처리")
@@ -77,7 +77,7 @@ func (gae *GAERouter) handlerLog(w http.ResponseWriter, r *http.Request) {
 }
 
 func (gae *GAERouter) handlerWebhook(w http.ResponseWriter, r *http.Request) {
-	Zerologger.Info().Str("handler", "handlerWebhook").Msg("requst")
+	Zerologger.Info().Str("handler", "/webhook").Msg("requst")
 	if appengine.IsAppEngine() {
 		ctx := appengine.NewContext(r)
 		appenginelog.Infof(ctx, "/webhook 요청 처리")

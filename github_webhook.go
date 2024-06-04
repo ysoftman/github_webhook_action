@@ -107,8 +107,8 @@ func (gwh *GithubWebhook) githubReleaseEvent(event *github.ReleaseEvent) {
 		event.GetAction(),
 		event.Sender.GetLogin(),
 		event.Sender.GetName(),
-		event.GetRelease().Name,
-		event.GetRelease().TagName,
-		event.GetRelease().URL)
+		*(event.GetRelease().Name),
+		*(event.GetRelease().TagName),
+		*(event.GetRelease().URL))
 	gwh.sender.SendMessage(msg)
 }
