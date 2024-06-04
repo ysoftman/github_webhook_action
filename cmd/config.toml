@@ -5,6 +5,9 @@ BuildTime="2024-06-03_23:35:20_KST"
 
 [server]
 Port=8080
+# google appengine 은 /tmp 에만 쓰기할 수 있다.
+# https://cloud.google.com/appengine/docs/standard/using-temp-files?tab=go
+LogFile="/tmp/github_webhook_action.log"
 LogLevel="info"
 LogIsJsonFormat=false
 WebhookSecretKey="ysoftman"

@@ -3,8 +3,9 @@ package main
 import (
 	"strings"
 
-	"github.com/go-resty/resty/v2"
 	gwa "github.com/ysoftman/github_webhook_action"
+
+	"github.com/go-resty/resty/v2"
 )
 
 func main() {

@@ -13,7 +13,7 @@ type GithubWebhook struct {
 
 func NewGithubWebhook(sender SenderInterface) *GithubWebhook {
 	LoadConfig()
-	CreateLogger(Conf.Server.LogLevel, Conf.Server.LogIsJSONFormat)
+	CreateLogger(Conf.Server.LogFile, Conf.Server.LogLevel, Conf.Server.LogIsJSONFormat)
 	return &GithubWebhook{sender: sender}
 }
 

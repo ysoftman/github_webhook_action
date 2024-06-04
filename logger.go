@@ -9,11 +9,9 @@ import (
 	"gopkg.in/natefinch/lumberjack.v2"
 )
 
-const ServerLogFile = "server.log"
-
 var Zerologger zerolog.Logger
 
-func CreateLogger(logLevelString string, isJson bool) {
+func CreateLogger(logFile, logLevelString string, isJson bool) {
 	logLevel, _ := zerolog.ParseLevel(logLevelString)
 	var writers []io.Writer
 	if isJson {
@@ -23,7 +21,7 @@ func CreateLogger(logLevelString string, isJson bool) {
 	}
 	lj := &lumberjack.Logger{
 		// 기본 로그 파일 명
-		Filename: ServerLogFile,
+		Filename: logFile,
 		// 로그 파일당 최대 허용 크기(megabytes) - rotate 조건
 		// MaxSize is the maximum size in megabytes of the log file before it gets
 		// rotated. It defaults to 100 megabytes.
@@ -63,7 +61,7 @@ func CreateLogger(logLevelString string, isJson bool) {
 }
 
 func TailLog() string {
-	t, err := tail.TailFile(ServerLogFile,
+	t, err := tail.TailFile(Conf.Server.LogFile,
 		tail.Config{
 			Location: &tail.SeekInfo{Offset: -1000, Whence: os.SEEK_END},
 			Follow:   false,

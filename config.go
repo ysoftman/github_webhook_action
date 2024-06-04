@@ -9,6 +9,7 @@ type ConfigTOML struct {
 	BuildTime string `toml:"BuildTime"`
 	Server    struct {
 		Port             int    `toml:"Port"`
+		LogFile          string `toml:"LogFile"`
 		LogLevel         string `toml:"LogLevel"`
 		LogIsJSONFormat  bool   `toml:"LogIsJsonFormat"`
 		WebhookSecretKey string `toml:"WebhookSecretKey"`
