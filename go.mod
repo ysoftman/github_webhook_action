@@ -6,7 +6,7 @@ require (
 	github.com/BurntSushi/toml v1.3.2
 	github.com/go-resty/resty/v2 v2.12.0
 	github.com/google/go-github v17.0.0+incompatible
-	github.com/hpcloud/tail v1.0.0
+	github.com/nxadm/tail v1.4.11
 	github.com/rs/zerolog v1.32.0
 	google.golang.org/appengine/v2 v2.0.5
 	gopkg.in/natefinch/lumberjack.v2 v2.2.1
@@ -21,6 +21,5 @@ require (
 	golang.org/x/net v0.22.0 // indirect
 	golang.org/x/sys v0.18.0 // indirect
 	google.golang.org/protobuf v1.30.0 // indirect
-	gopkg.in/fsnotify.v1 v1.4.7 // indirect
 	gopkg.in/tomb.v1 v1.0.0-20141024135613-dd632973f1e7 // indirect
 )

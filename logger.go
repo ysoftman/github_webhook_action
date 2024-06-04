@@ -4,7 +4,7 @@ import (
 	"io"
 	"os"
 
-	"github.com/hpcloud/tail"
+	"github.com/nxadm/tail"
 	"github.com/rs/zerolog"
 	"gopkg.in/natefinch/lumberjack.v2"
 )
@@ -72,6 +72,7 @@ func TailLog() string {
 	t, err := tail.TailFile(Conf.Server.LogFile,
 		tail.Config{
 			Location: &tail.SeekInfo{Offset: -offset, Whence: io.SeekEnd},
+			ReOpen:   false, // cannot set ReOpen without Follow.
 			Follow:   false,
 		})
 	if err != nil {
