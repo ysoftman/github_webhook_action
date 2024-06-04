@@ -29,7 +29,6 @@ func (gwh *GithubWebhook) githubWebhook(req *http.Request) {
 		return
 	}
 	webhookType := github.WebHookType(req)
-	Zerologger.Info().Msgf("github WebHookType:%v", webhookType)
 	switch event := event.(type) {
 	case *github.CommitCommentEvent:
 		gwh.githubCommitCommentEvent(event)
