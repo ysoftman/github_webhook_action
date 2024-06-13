@@ -49,7 +49,7 @@ func (gwh *GithubWebhook) githubWebhook(req *http.Request) {
 	}
 }
 func (gwh *GithubWebhook) githubCommitCommentEvent(event *github.CommitCommentEvent) {
-	msg := fmt.Sprintf("[CommitComment-%v] sender:%v(%v) comment:%v link:%v",
+	msg := fmt.Sprintf("[CommitComment] action:%v sender:%v(%v) comment:%v link:%v",
 		event.GetAction(),
 		event.Sender.GetLogin(),
 		event.Sender.GetName(),
@@ -58,7 +58,7 @@ func (gwh *GithubWebhook) githubCommitCommentEvent(event *github.CommitCommentEv
 	gwh.sender.SendMessage(msg)
 }
 func (gwh *GithubWebhook) githubPushEvent(event *github.PushEvent) {
-	msg := fmt.Sprintf("[Push-%v] sender:%v(%v) pusher:%v link:%v",
+	msg := fmt.Sprintf("[Push] commit:%v sender:%v(%v) pusher:%v link:%v",
 		*event.HeadCommit.Message,
 		event.Sender.GetLogin(),
 		event.Sender.GetName(),
@@ -67,7 +67,7 @@ func (gwh *GithubWebhook) githubPushEvent(event *github.PushEvent) {
 	gwh.sender.SendMessage(msg)
 }
 func (gwh *GithubWebhook) githubPullRequestEvent(event *github.PullRequestEvent) {
-	msg := fmt.Sprintf("[PullRequest-%v] sender:%v(%v) number:%v link:%v",
+	msg := fmt.Sprintf("[PullRequest] action:%v sender:%v(%v) number:%v link:%v",
 		event.GetAction(),
 		event.Sender.GetLogin(),
 		event.Sender.GetName(),
@@ -76,7 +76,7 @@ func (gwh *GithubWebhook) githubPullRequestEvent(event *github.PullRequestEvent)
 	gwh.sender.SendMessage(msg)
 }
 func (gwh *GithubWebhook) githubPullRequestReviewEvent(event *github.PullRequestReviewEvent) {
-	msg := fmt.Sprintf("[PullRequestReview-%v] sender:%v(%v) review:%v link:%v",
+	msg := fmt.Sprintf("[PullRequestReview] action:%v sender:%v(%v) review:%v link:%v",
 		event.GetAction(),
 		event.Sender.GetLogin(),
 		event.Sender.GetName(),
@@ -85,7 +85,7 @@ func (gwh *GithubWebhook) githubPullRequestReviewEvent(event *github.PullRequest
 	gwh.sender.SendMessage(msg)
 }
 func (gwh *GithubWebhook) githubPullRequestReviewCommentEvent(event *github.PullRequestReviewCommentEvent) {
-	msg := fmt.Sprintf("[PullRequestReviewComment-%v] sender:%v(%v) comment:%v link:%v",
+	msg := fmt.Sprintf("[PullRequestReviewComment] action:%v sender:%v(%v) comment:%v link:%v",
 		event.GetAction(),
 		event.Sender.GetLogin(),
 		event.Sender.GetName(),
@@ -94,7 +94,7 @@ func (gwh *GithubWebhook) githubPullRequestReviewCommentEvent(event *github.Pull
 	gwh.sender.SendMessage(msg)
 }
 func (gwh *GithubWebhook) githubCreateEvent(event *github.CreateEvent) {
-	msg := fmt.Sprintf("[Create-%v] sender:%v(%v) description:%v link:%v",
+	msg := fmt.Sprintf("[Create] type:%v sender:%v(%v) description:%v link:%v",
 		*(event.RefType),
 		event.Sender.GetLogin(),
 		event.Sender.GetName(),
@@ -103,7 +103,7 @@ func (gwh *GithubWebhook) githubCreateEvent(event *github.CreateEvent) {
 	gwh.sender.SendMessage(msg)
 }
 func (gwh *GithubWebhook) githubReleaseEvent(event *github.ReleaseEvent) {
-	msg := fmt.Sprintf("[Release-%v] sender:%v(%v) name:%v tag:%v link:%v",
+	msg := fmt.Sprintf("[Release] action:%v sender:%v(%v) name:%v tag:%v link:%v",
 		event.GetAction(),
 		event.Sender.GetLogin(),
 		event.Sender.GetName(),
