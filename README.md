@@ -4,7 +4,7 @@ github webhook 을 받아 필요한 액션(api 호출)을 수행합니다.
 
 - build
 
-```
+```bash
 go get ./...
 
 # run for local test
@@ -18,7 +18,7 @@ go build
 
 ```
 
-## google app engine 사용
+## google app engine 사용 (비용 발생으로 2025.04 삭제)
 
 ```bash
 # gcloud 설치 - mac
@@ -102,7 +102,7 @@ gcloud app instances ssh default --server=default --version=20240604
 
 ## webhook 등록
 
-- https://github.com/ysoftman/test_code/settings/hooks 에 등록
-  - payloadURL: https://github-webhook-action.appspot.com/v1/webhook
+- <https://github.com/ysoftman/test_code/settings/hooks> 에 등록
+  - payloadURL: <https://github-webhook-action.appspot.com/v1/webhook>
   - secret: ysoftman
   - trgger(indiviual event): commit comment, pushes, pull requests, pull request reviews, pull request review comments ...등 트리거
